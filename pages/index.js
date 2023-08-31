@@ -128,7 +128,11 @@ export default function Home(className = "" ) {
                 />
               </svg>
             )}
+<<<<<<< HEAD
           
+=======
+             
+>>>>>>> cbd0c760f9e6629e3deab10c2243e31e501cd8f7
           </div>
       
           <h1 className="text-3xl md:text-5xl sm:text-8xl text-center mb-6 mt-6 sm:mb-8 text-transparent 
