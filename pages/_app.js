@@ -5,9 +5,11 @@ import "../styles/globals.css";
 const activeChainId = ChainId.Mainnet;
 
 function MyApp({ Component, pageProps }) {
+  const Key= process.env.NEXT_PUBLIC_TEMPLATE_CLIENT_ID;
   return (
     <ThirdwebProvider
       desiredChainId={activeChainId}
+      clientId={Key}
       authConfig={{
         domain: "example.org",
         authUrl: "/api/auth",
