@@ -11,13 +11,15 @@ function useDarkMode() {
 
     root.classList.remove(colorTheme);
     root.classList.add(theme);
+    root.classList.add('transition-all');
+    root.classList.add('duration-300');
+    root.classList.add('ease-in-out');
 
-    if (typeof window !== "undefined") {
-      localStorage.setItem("theme", theme);
-    }
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   return [colorTheme, setTheme];
 }
+
 
 export default useDarkMode;

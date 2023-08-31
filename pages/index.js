@@ -10,7 +10,7 @@ export default function Home(className = "" ) {
   //variables to store wallet and collection address
   const [walletAddress, setWalletAddress] = useState("");
   const [collectionAddress, setCollectionAddress] = useState("");
-  
+  const [colorTheme, setTheme] = useDarkMode(); 
   //variable to fetchNFTs from wallet address
   const [NFTs, setNFTs] = useState([]);
 
@@ -18,7 +18,6 @@ export default function Home(className = "" ) {
   const [fetchForCollection, setFetchForCollection] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageKeys, setPageKeys] = useState([""]);
-  const [colorTheme, setTheme] = useDarkMode();  
 
   //Api key is stored globally because it is used in two separate functions.
   const API_KEY = "BclkjptY8RFaasKyEPNt5R62jL2le-Ir";
@@ -88,16 +87,13 @@ export default function Home(className = "" ) {
   };
 
   return (
-    <div className="font-poppins min-h-screen p-4 sm:p-6 bg-white dark:bg-black">     
-     
-      <Head>
+    <div className={`font-poppins min-h-screen p-4 sm:p-6 transition-all duration-300 ease-in-out ${colorTheme === "dark" ? "bg-black" : "bg-white"}`}>      <Head>
         <title>Mirac.Eth NFT Gallery</title>
         <meta name="description" content="View View NFTs from Your Address or Collection" />
         <meta name="keywords" content="blockchain, nft, web3" />
       </Head> 
 
-      <main className={`text-darkgrey overflow-x-hidden min-h-screen w-full mx-auto shadow-lg ${className}`}>
-        <div>
+      <main className="text-darkgrey overflow-x-hidden min-h-screen w-full mx-auto shadow-lg">        <div>
           <div>
             {colorTheme === "light" ? (
             <svg
@@ -141,48 +137,49 @@ export default function Home(className = "" ) {
           </h1>
         </div>
         
-        <form className="max-w-lg mx-auto flex flex-col">
-          <input
-            type="text"
-            placeholder="Add your wallet address"
-            className="w-full mb-4 h-8 bg-transparent dark:bg-gray-800 text-black dark:text-white"
-            onChange={(e) => {
-              setWalletAddress(e.target.value);
-            }}
-            value={walletAddress}
-            disabled={fetchForCollection}
-          />
-          <input
-            type="text"
-            placeholder="Add the collection address"
-            className="w-full mb-6 h-8 bg-transparent dark:bg-gray-800 text-black dark:text-white"
-            onChange={(e) => {
-              setCollectionAddress(e.target.value);
-            }}
-            value={collectionAddress}
-          />
-          <label className="flex justify-center items-center mb-4 text-white">
-            <input
-              type="checkbox"
-              className="mr-2"
-              onChange={(e) => {
-                setFetchForCollection(e.target.checked);
-              }}
-              checked={fetchForCollection}
-            ></input>
-            Fetch for collection
-          </label>
+        <form className="max-w-lg mx-auto flex flex-col space-y-4">        <input
+  type="text"
+  placeholder="Add your wallet address"
+  className={`w-full mb-4 h-10 p-2 rounded-md bg-transparent border-2 transition-all duration-300 ease-in-out focus:outline-none focus:border-indigo-500 ${fetchForCollection ? 'cursor-not-allowed' : ''} ${colorTheme === "dark" ? "text-white border-white" : "text-black border-black"}`}
+  onChange={(e) => {
+    setWalletAddress(e.target.value);
+  }}
+  value={walletAddress}
+  disabled={fetchForCollection}
+/>
+<input
+  type="text"
+  placeholder="Add the collection address"
+  className={`w-full mb-6 h-10 p-2 rounded-md bg-transparent border-2 transition-all duration-300 ease-in-out focus:outline-none focus:border-indigo-500 ${colorTheme === "dark" ? "text-white border-white" : "text-black border-black"}`}
+  onChange={(e) => {
+    setCollectionAddress(e.target.value);
+  }}
+  value={collectionAddress}
+/>
+
+
+    <label className={`flex justify-center items-center mb-4 ${colorTheme === "dark" ? "text-white" : "text-black"}`}>
+  <input
+    type="checkbox"
+    className="mr-2"
+    onChange={(e) => {
+      setFetchForCollection(e.target.checked);
+    }}
+    checked={fetchForCollection}
+  ></input>
+  Fetch for collection
+</label>
+
           <button
+            className={`transition-all duration-300 ease-in-out ${!walletAddress && !collectionAddress ? 'cursor-not-allowed' : ''} 
+            px-4 py-2 rounded-md w-full text-white bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500
+            hover:from-pink-600 hover:via-red-600 hover:to-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500`}
             disabled={!walletAddress && !collectionAddress}
             onClick={collectionAddress ? fetchNFTsForCollection : fetchNFTs}
-            className="disabled:bg-slate-500 disabled:border-slate-500 disabled:text-gray-50
-            disabled:hover:text-gray-50 text-white bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500
-            px-4 py-2 rounded-md w-full transition-effect border border-none font-semibold"
           >
             Fetch NFTs
           </button>
         </form>
-      
         <div className="grid grid-cols-3 gap-8 mt-6">
           {!!NFTs.length &&
             NFTs.map((nft, i) => {
