@@ -128,7 +128,7 @@ export default function Home(className = "" ) {
                 />
               </svg>
             )}
-                <a class="home" href="https://sign-in-b4xz.vercel.app/">Home</a><hr/>
+             
           </div>
       
           <h1 className="text-3xl md:text-5xl sm:text-8xl text-center mb-6 mt-6 sm:mb-8 text-transparent 
